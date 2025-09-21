@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أوقات العمل - مطعم فاخر</title>
+    <meta name="description" content="تعرف على أوقات عمل مطعمنا الفاخر">
+    <meta name="theme-color" content="#667eea">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍽️</text></svg>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .hours-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem 0;
+            direction: rtl;
+        }
+
+        .hours-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(20px);
+        }
+
+        .hours-header {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 0.8rem;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .hours-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hours-header p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+        }
+
+        .hours-content {
+            padding: 3rem;
+        }
+
+        .hours-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .day-card {
+            background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .day-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .day-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.2);
+            border-color: #667eea;
+        }
+
+        .day-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .day-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .day-time {
+            font-size: 1.2rem;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .special-hours {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .special-hours .day-name,
+        .special-hours .day-time {
+            color: white;
+        }
+
+        .info-section {
+            background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .info-section h2 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .info-section p {
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .contact-item {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+        }
+
+        .contact-item i {
+            font-size: 2rem;
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .contact-item h3 {
+            font-size: 1.2rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-item p {
+            color: #666;
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            .hours-page {
+                padding: 1rem;
+            }
+
+            .hours-content {
+                padding: 2rem;
+            }
+
+            .hours-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .hours-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hours-page">
+        <div class="hours-container">
+            <div class="hours-header">
+                <a href="index.html" class="back-btn">
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <h1>🕐 أوقات العمل</h1>
+                <p>نحن في خدمتكم في الأوقات التالية</p>
+            </div>
+
+            <div class="hours-content">
+                <div class="hours-grid">
+                    <div class="day-card">
+                        <div class="day-name">
+                            <i class="fas fa-calendar-day"></i>
+                            السبت
+                        </div>
+                        <div class="day-time">8:00 ص - 12:00 م</div>
+                    </div>
+
+                    <div class="day-card">
+                        <div class="day-name">
+                            <i class="fas fa-calendar-day"></i>
+                            الأحد
+                        </div>
+                        <div class="day-time">8:00 ص - 12:00 م</div>
+                    </div>
+
+                    <div class="day-card">
+                        <div class="day-name">
+                            <i class="fas fa-calendar-day"></i>
+                            الاثنين
+                        </div>
+                        <div class="day-time">8:00 ص - 12:00 م</div>
+                    </div>
+
+                    <div class="day-card">
+                        <div class="day-name">
+                            <i class="fas fa-calendar-day"></i>
+                            الثلاثاء
+                        </div>
+                        <div class="day-time">8:00 ص - 12:00 م</div>
+                    </div>
+
+                    <div class="day-card">
+                        <div class="day-name">
+                            <i class="fas fa-calendar-day"></i>
+                            الأربعاء
+                        </div>
+                        <div class="day-time">8:00 ص - 12:00 م</div>
+                    </div>
+
+                    <div class="day-card">
+                        <div class="day-name">
+                            <i class="fas fa-calendar-day"></i>
+                            الخميس
+                        </div>
+                        <div class="day-time">8:00 ص - 12:00 م</div>
+                    </div>
+
+                    <div class="day-card special-hours">
+                        <div class="day-name">
+                            <i class="fas fa-star"></i>
+                            الجمعة
+                        </div>
+                        <div class="day-time">2:00 م - 12:00 م</div>
+                    </div>
+                </div>
+
+                <div class="info-section">
+                    <h2>
+                        <i class="fas fa-info-circle"></i>
+                        معلومات إضافية
+                    </h2>
+                    <p>نقدم خدمة الإفطار من الساعة 8:00 صباحاً حتى 11:00 صباحاً</p>
+                    <p>خدمة الغداء والعشاء متاحة طوال ساعات العمل</p>
+                    <p>يُنصح بالحجز المسبق خلال عطلة نهاية الأسبوع</p>
+                    <p>نقدم خدمة التوصيل المنزلي حتى الساعة 11:00 مساءً</p>
+                </div>
+
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <h3>للحجز والاستفسار</h3>
+                        <p>+966 50 123 4567</p>
+                    </div>
+
+                    <div class="contact-item">
+                        <i class="fas fa-motorcycle"></i>
+                        <h3>خدمة التوصيل</h3>
+                        <p>+966 50 765 4321</p>
+                    </div>
+
+                    <div class="contact-item">
+                        <i class="fab fa-whatsapp"></i>
+                        <h3>واتساب</h3>
+                        <p>+966 50 123 4567</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تقييم المطعم - مطعم فاخر</title>
+    <meta name="description" content="قيم تجربتك في مطعمنا الفاخر">
+    <meta name="theme-color" content="#667eea">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍽️</text></svg>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .rating-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem 0;
+            direction: rtl;
+        }
+
+        .rating-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(20px);
+        }
+
+        .rating-header {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 0.8rem;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .rating-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .rating-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .restaurant-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-bottom: 4px solid #667eea;
+        }
+
+        .rating-form {
+            padding: 3rem;
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.8rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 15px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .optional {
+            color: #888;
+            font-size: 0.9rem;
+            font-weight: normal;
+        }
+
+        .rating-stars {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .rating-stars h3 {
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .stars-container {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .star {
+            font-size: 3rem;
+            color: #ddd;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+
+        .star:hover,
+        .star.active {
+            color: #ffd700;
+            transform: scale(1.1);
+        }
+
+        .star:hover ~ .star {
+            color: #ddd;
+        }
+
+        .rating-text {
+            font-size: 1.1rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        .submit-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 1.2rem 3rem;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 2rem;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        @media (max-width: 768px) {
+            .rating-page {
+                padding: 1rem;
+            }
+
+            .rating-form {
+                padding: 2rem;
+            }
+
+            .rating-header h1 {
+                font-size: 2rem;
+            }
+
+            .star {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="rating-page">
+        <div class="rating-container">
+            <div class="rating-header">
+                <a href="index.html" class="back-btn">
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <h1>🌟 تقييم المطعم</h1>
+                <p>شاركنا رأيك في تجربتك لدينا</p>
+            </div>
+
+            <img src="images/restaurant_interior.jpg" alt="داخل المطعم الفاخر" class="restaurant-image">
+
+            <form class="rating-form" id="ratingForm">
+                <div class="form-group">
+                    <label for="customerName">الاسم الكريم *</label>
+                    <input type="text" id="customerName" name="customerName" required placeholder="أدخل اسمك الكريم">
+                </div>
+
+                <div class="form-group">
+                    <label for="customerEmail">البريد الإلكتروني <span class="optional">(اختياري)</span></label>
+                    <input type="email" id="customerEmail" name="customerEmail" placeholder="your.email@example.com">
+                </div>
+
+                <div class="rating-stars">
+                    <h3>تقييمك للمطعم</h3>
+                    <div class="stars-container">
+                        <span class="star" data-rating="1">⭐</span>
+                        <span class="star" data-rating="2">⭐</span>
+                        <span class="star" data-rating="3">⭐</span>
+                        <span class="star" data-rating="4">⭐</span>
+                        <span class="star" data-rating="5">⭐</span>
+                    </div>
+                    <div class="rating-text" id="ratingText">اختر تقييمك</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="comment">تعليقاتك وملاحظاتك</label>
+                    <textarea id="comment" name="comment" placeholder="شاركنا تجربتك وأي ملاحظات أو اقتراحات لتحسين خدماتنا..."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn" disabled>
+                    <i class="fas fa-paper-plane"></i>
+                    إرسال التقييم
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let currentRating = 0;
+        const stars = document.querySelectorAll('.star');
+        const ratingText = document.getElementById('ratingText');
+        const submitBtn = document.getElementById('submitBtn');
+        const customerName = document.getElementById('customerName');
+
+        const ratingTexts = {
+            1: 'ضعيف - نحتاج لتحسين كبير',
+            2: 'مقبول - يمكن أن يكون أفضل',
+            3: 'جيد - تجربة مرضية',
+            4: 'ممتاز - تجربة رائعة',
+            5: 'استثنائي - تجربة لا تُنسى!'
+        };
+
+        // Handle star rating
+        stars.forEach(star => {
+            star.addEventListener('click', function() {
+                currentRating = parseInt(this.dataset.rating);
+                updateStarRating(currentRating);
+                updateSubmitButton();
+            });
+
+            star.addEventListener('mouseenter', function() {
+                const hoverRating = parseInt(this.dataset.rating);
+                updateStarRating(hoverRating);
+                ratingText.textContent = ratingTexts[hoverRating];
+            });
+        });
+
+        document.querySelector('.stars-container').addEventListener('mouseleave', function() {
+            updateStarRating(currentRating);
+            ratingText.textContent = currentRating > 0 ? ratingTexts[currentRating] : 'اختر تقييمك';
+        });
+
+        function updateStarRating(rating) {
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.add('active');
+                } else {
+                    star.classList.remove('active');
+                }
+            });
+        }
+
+        // Handle form validation
+        customerName.addEventListener('input', updateSubmitButton);
+
+        function updateSubmitButton() {
+            const nameValid = customerName.value.trim().length > 0;
+            const ratingValid = currentRating > 0;
+            
+            submitBtn.disabled = !(nameValid && ratingValid);
+        }
+
+        // Handle form submission
+        document.getElementById('ratingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                name: customerName.value.trim(),
+                email: document.getElementById('customerEmail').value.trim(),
+                rating: currentRating,
+                comment: document.getElementById('comment').value.trim(),
+                timestamp: new Date().toISOString()
+            };
+
+            // Store in localStorage (in real app, send to server)
+            const ratings = JSON.parse(localStorage.getItem('restaurantRatings') || '[]');
+            ratings.push(formData);
+            localStorage.setItem('restaurantRatings', JSON.stringify(ratings));
+
+            // Show success message
+            alert('شكراً لك! تم إرسال تقييمك بنجاح ✨\n\nنقدر وقتك وآراءك القيمة، وسنعمل على تحسين خدماتنا باستمرار.');
+            
+            // Redirect back to main page
+            window.location.href = 'index.html';
+        });
+
+        // Initialize
+        updateSubmitButton();
+    </script>
+</body>
+</html>
+

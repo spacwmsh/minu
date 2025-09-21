@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نبذة عنا - مطعم فاخر</title>
+    <meta name="description" content="تعرف على قصة مطعمنا الفاخر ورؤيتنا">
+    <meta name="theme-color" content="#667eea">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍽️</text></svg>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .about-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem 0;
+            direction: rtl;
+        }
+
+        .about-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(20px);
+        }
+
+        .about-header {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 0.8rem;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .about-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .about-header p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+        }
+
+        .about-content {
+            padding: 3rem;
+        }
+
+        .story-section {
+            background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .story-section h2 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .story-section p {
+            font-size: 1.2rem;
+            color: #666;
+            line-height: 2;
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
+            border-color: #667eea;
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: #667eea;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .values-section {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .values-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .value-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .value-item h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.2);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: #666;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .about-page {
+                padding: 1rem;
+            }
+
+            .about-content {
+                padding: 2rem;
+            }
+
+            .about-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .story-section {
+                padding: 2rem;
+            }
+
+            .features-grid,
+            .values-grid,
+            .stats-section {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="about-page">
+        <div class="about-container">
+            <div class="about-header">
+                <a href="index.html" class="back-btn">
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <h1>🍽️ نبذة عنا</h1>
+                <p>قصة مطعم فاخر - رحلة من الشغف إلى التميز</p>
+            </div>
+
+            <div class="about-content">
+                <div class="story-section">
+                    <h2>
+                        <i class="fas fa-book-open"></i>
+                        قصتنا
+                    </h2>
+                    <p>
+                        تأسس مطعم فاخر عام 2020 من رؤية بسيطة: تقديم تجربة طعام لا تُنسى تجمع بين النكهات الأصيلة والضيافة العربية الكريمة. بدأنا كحلم صغير وتطورنا لنصبح واحداً من أبرز المطاعم في المنطقة.
+                    </p>
+                    <p>
+                        نؤمن بأن الطعام ليس مجرد وجبة، بل تجربة تجمع الأحباب وتخلق الذكريات الجميلة. لذلك نحرص على اختيار أجود المكونات وتحضير كل طبق بعناية فائقة وحب كبير.
+                    </p>
+                    <p>
+                        فريقنا من الطهاة المهرة يجمع بين الخبرة التقليدية والإبداع المعاصر، ليقدم لكم أطباقاً تلامس القلب قبل أن تصل إلى المعدة.
+                    </p>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <h3>أطباق طازجة ومحضرة يومياً</h3>
+                        <p>نحضر جميع أطباقنا يومياً باستخدام أجود المكونات الطازجة والمحلية</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h3>خدمة عملاء متميزة</h3>
+                        <p>فريقنا المدرب يحرص على تقديم أفضل خدمة وضمان راحتكم وسعادتكم</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <h3>أجواء عائلية راقية</h3>
+                        <p>مساحة مريحة وأجواء دافئة تناسب جميع المناسبات العائلية والاجتماعية</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <h3>أسعار مناسبة للجميع</h3>
+                        <p>نقدم أطباقاً فاخرة بأسعار معقولة تناسب جميع الميزانيات</p>
+                    </div>
+                </div>
+
+                <div class="values-section">
+                    <h2>قيمنا ومبادئنا</h2>
+                    <div class="values-grid">
+                        <div class="value-item">
+                            <h3>
+                                <i class="fas fa-star"></i>
+                                الجودة
+                            </h3>
+                            <p>نلتزم بأعلى معايير الجودة في كل ما نقدمه</p>
+                        </div>
+
+                        <div class="value-item">
+                            <h3>
+                                <i class="fas fa-handshake"></i>
+                                الأمانة
+                            </h3>
+                            <p>نتعامل بصدق وشفافية مع جميع عملائنا</p>
+                        </div>
+
+                        <div class="value-item">
+                            <h3>
+                                <i class="fas fa-users"></i>
+                                الضيافة
+                            </h3>
+                            <p>نرحب بكم كأفراد من العائلة الكريمة</p>
+                        </div>
+
+                        <div class="value-item">
+                            <h3>
+                                <i class="fas fa-leaf"></i>
+                                الاستدامة
+                            </h3>
+                            <p>نحرص على البيئة ونستخدم مواد قابلة للتدوير</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stats-section">
+                    <div class="stat-card">
+                        <div class="stat-number">5+</div>
+                        <div class="stat-label">سنوات من التميز</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-number">10,000+</div>
+                        <div class="stat-label">عميل سعيد</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-number">150+</div>
+                        <div class="stat-label">طبق مميز</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-number">25+</div>
+                        <div class="stat-label">طاهي محترف</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

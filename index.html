@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قائمة الطعام الإلكترونية - مطعم فاخر</title>
+    <meta name="description" content="قائمة طعام إلكترونية فاخرة تضم أشهى الأطباق من جميع الأصناف">
+    <meta name="theme-color" content="#667eea">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍽️</text></svg>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preload" href="style.css" as="style">
+    <link rel="preload" href="script.js" as="script">
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+</head>
+<body>
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <h2>🍽️ طاولتك</h2>
+            <button id="closeSidebar" class="close-btn">&times;</button>
+        </div>
+        <div class="sidebar-content">
+            <div class="sidebar-item" onclick="closeSidebarAndGoHome()">
+                <i class="fas fa-home"></i>
+                <span>الصفحة الرئيسية</span>
+            </div>
+            <div class="sidebar-item" onclick="openRating()">
+                <i class="fas fa-star"></i>
+                <span>تقييمك</span>
+            </div>
+            <div class="sidebar-item" onclick="showWorkingHours()">
+                <i class="fas fa-clock"></i>
+                <span>أوقات العمل</span>
+            </div>
+            <div class="sidebar-item" onclick="showAboutUs()">
+                <i class="fas fa-info-circle"></i>
+                <span>نبذة عنا</span>
+            </div>
+            <div class="sidebar-item" onclick="openLocation()">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>الموقع</span>
+            </div>
+            <div class="social-links">
+                <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
+                <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://wa.me/966500000000" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            </div>
+            <div class="sidebar-item dropdown-item developer-info-small" onclick="toggleDeveloperInfo()">
+                <i class="fas fa-code"></i>
+                <span>المصمم</span>
+                <i class="fas fa-chevron-down dropdown-arrow" id="developerArrow"></i>
+            </div>
+            <div class="developer-dropdown" id="developerDropdown">
+                <div class="developer-info-detailed">
+                    <div class="developer-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <h4>sabah_alloufi </h4>
+                    <p class="developer-title">مطور مواقع ومصمم UI/UX</p>
+                    <div class="developer-contact">
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+966 50 123 4567</span>
+                        </div>
+                       
+                    </div>
+                    <div class="developer-social">
+                        <a href="https://wa.me/905374342451" target="_blank" class="social-btn whatsapp">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                     
+                        <a href="https://facebook.com/Sabah.alloufi.2001" target="_blank" class="social-btn linkedin">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="https://instagram.com/sabah_alloufi/" target="_blank" class="social-btn github">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div id="overlay" class="overlay" onclick="closeSidebar()"></div>
+
+    <header>
+        <div class="header-top">
+            <button id="menuBtn" class="menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <h1>🍽️ قائمة طعام المطعم الفاخر</h1>
+            <div class="header-actions">
+                <button id="searchBtn" class="search-btn">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Search Bar -->
+        <div id="searchBar" class="search-bar hidden">
+            <input type="text" id="searchInput" placeholder="ابحث في القائمة...">
+            <button id="clearSearch" class="clear-search">&times;</button>
+        </div>
+
+        <!-- Categories Dropdown -->
+        <div id="categoriesDropdown" class="categories-dropdown hidden">
+            <div class="category-item" data-category="breakfast">
+                <span>🍳 الفطور الصباحي</span>
+                <span class="count">6</span>
+            </div>
+            <div class="category-item" data-category="hot-appetizers">
+                <span>🔥 المقبلات الساخنة</span>
+                <span class="count">6</span>
+            </div>
+            <div class="category-item" data-category="cold-appetizers">
+                <span>🧊 المقبلات الباردة</span>
+                <span class="count">6</span>
+            </div>
+            <div class="category-item" data-category="salads">
+                <span>🥗 السلطات</span>
+                <span class="count">6</span>
+            </div>
+            <div class="category-item" data-category="soups">
+                <span>🍲 الشوربات</span>
+                <span class="count">6</span>
+            </div>
+            <div class="category-item" data-category="eastern">
+                <span>🍛 الأطباق الشرقية</span>
+                <span class="count">6</span>
+            </div>
+            <div class="category-item" data-category="western">
+                <span>🍝 الأطباق الغربية</span>
+                <span class="count">6</span>
+            </div>
+            <div class="category-item" data-category="grills">
+                <span>🔥 المشاوي</span>
+                <span class="count">6</span>
+            </div>
+            <div class="category-item" data-category="seafood">
+                <span>🐟 المأكولات البحرية</span>
+                <span class="count">6</span>
+            </div>
+            <div class="category-item" data-category="pasta">
+                <span>🍝 الباستا</span>
+                <span class="count">6</span>
+            </div>
+            <div class="category-item" data-category="pizza">
+                <span>🍕 البيتزا</span>
+                <span class="count">6</span>
+            </div>
+            <div class="category-item" data-category="sandwiches">
+                <span>🥪 السندويتشات</span>
+                <span class="count">6</span>
+            </div>
+            <div class="category-item" data-category="kids-meals">
+                <span>👶 وجبات الأطفال</span>
+                <span class="count">6</span>
+            </div>
+            <div class="category-item" data-category="crepes">
+                <span>🥞 الكريب</span>
+                <span class="count">6</span>
+            </div>
+            <div class="category-item" data-category="waffles">
+                <span>🧇 الوافل</span>
+                <span class="count">6</span>
+            </div>
+            <div class="category-item" data-category="cakes">
+                <span>🍰 قطع الكيك</span>
+                <span class="count">6</span>
+            </div>
+            <div class="category-item" data-category="fruit-salads">
+                <span>🍓 سلطات الفواكه</span>
+                <span class="count">6</span>
+            </div>
+            <div class="category-item" data-category="hot-drinks">
+                <span>☕ المشروبات الساخنة</span>
+                <span class="count">6</span>
+            </div>
+            <div class="category-item" data-category="cold-drinks">
+                <span>🥤 المشروبات الباردة</span>
+                <span class="count">6</span>
+            </div>
+            <div class="category-item" data-category="sweets">
+                <span>🍰 الحلويات</span>
+                <span class="count">6</span>
+            </div>
+            <div class="category-item" data-category="shisha">
+                <span>🫖 الأركيلة</span>
+                <span class="count">6</span>
+            </div>
+        </div>
+
+        <!-- Breakfast Categories Dropdown -->
+        <div id="breakfastDropdown" class="breakfast-dropdown hidden">
+            <div class="breakfast-category-item" data-category="breakfast">
+                <span>🍳 فطور عربي تقليدي</span>
+            </div>
+            <div class="breakfast-category-item" data-category="breakfast">
+                <span>🥞 فطور صحي متكامل</span>
+            </div>
+            <div class="breakfast-category-item" data-category="breakfast">
+                <span>🧈 فطور شامي أصيل</span>
+            </div>
+            <div class="breakfast-category-item" data-category="breakfast">
+                <span>🍳 بيض مقلي بالطماطم</span>
+            </div>
+            <div class="breakfast-category-item" data-category="breakfast">
+                <span>🫘 فول مدمس بالطحينة</span>
+            </div>
+            <div class="breakfast-category-item" data-category="breakfast">
+                <span>🫓 منقوشة زعتر وجبن</span>
+            </div>
+        </div>
+
+        <nav>
+            <ul>
+                <li>
+                    <button id="categoriesBtn" class="categories-btn" onclick="toggleCategoriesDropdown()">
+                        <i class="fas fa-list"></i>
+                        <span>الأصناف</span>
+                    </button>
+                </li>
+                <li><a href="#breakfast">🍳 الفطور</a></li>
+                <li><a href="#hot-appetizers">🔥 مقبلات</a></li>
+                <li><a href="#salads">🥗 السلطات</a></li>
+                <li><a href="#eastern">🍛 شرقية</a></li>
+                <li><a href="#western">🍝 غربية</a></li>
+                <li><a href="#grills">🔥 المشاوي</a></li>
+                <li><a href="#seafood">🐟 بحرية</a></li>
+                <li><a href="#sandwiches">🥪 سندويتشات</a></li>
+                <li><a href="#crepes">🥞 الحلويات</a></li>
+                <li><a href="#fruit-salads">🍓 سلطات فواكه</a></li>
+                <li><a href="#hot-drinks">☕ مشروبات </a></li>
+                <!--     <li><a href="#soups">🍲 الشوربات</a></li>
+                <li><a href="#cold-appetizers">🧊 مقبلات باردة</a></li>
+                <li><a href="#pasta">🍝 الباستا</a></li>
+                <li><a href="#pizza">🍕 البيتزا</a></li>
+                <li><a href="#kids-meals">👶 أطفال</a></li>
+                <li><a href="#cold-drinks">🥤 باردة</a></li>
+                <li><a href="#waffles">🧇 الوافل</a></li>
+                <li><a href="#cakes">🍰 الكيك</a></li>
+                <li><a href="#sweets">🍰 الحلويات</a></li>
+                <li><a href="#shisha">🫖 الأركيلة</a></li>
+   -->
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Breakfast Section -->
+        <section id="breakfast" class="category">
+            <h2>🍳 الفطور الصباحي</h2>
+            <div class="items-grid">
+                <div class="menu-item">
+                    <img src="images/breakfast/breakfast2.jpg" alt="فطور عربي تقليدي">
+                    <h3>فطور عربي تقليدي</h3>
+                    <p>فطور شامل يضم الحمص والفول والجبن والزيتون والخضار الطازجة مع الخبز العربي</p>
+                    <span class="price">7 $</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/breakfast/Olives_Plate.png" alt="فطور صحي">
+                    <h3>  زيتون اخضر /اسود </h3>
+                    <p>وجبة فطور صحية       </p>
+                    <span class="price">2 $</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/breakfast/Falafel.jpg" alt="فطور شامي">
+                    <h3>فلافل   </h3>
+                    <p>وجبة فطور صحية       </p>
+                    <span class="price">3 $</span>
+                </div>
+            
+                <div class="menu-item">
+                    <img src="images/breakfast/Hummus_with_Tahini.jpg" alt="فول مدمس">
+                    <h3>  حمص مطحون</h3>
+                    <p>وجبة فطور صحية       </p>
+                    <span class="price">1.5 $</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hot Appetizers Section -->
+        <section id="hot-appetizers" class="category">
+            <h2>🔥 المقبلات </h2>
+            <div class="items-grid">
+                <div class="menu-item">
+                    <img src="images/soups/Eggplant_Mutabbal.jpg" alt="متبل  ">
+                    <h3>متبل باذنجان   </h3>
+                    <p>وجبة         </p>
+                    <span class="price">1 $</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/soups/Hummus_with_Tahini.jpg" alt="حمص مطحون">
+                    <h3>حمص مطحون  </h3>
+                    <p>وجبة         </p>
+                    <span class="price">1.5 $</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/soups/soup1.jpg" alt="شوربة ">
+                    <h3>شوربة </h3>
+                    <p>وجبة         </p>
+                    <span class="price">1 $</span>
+                </div>
+               
+            </div>
+        </section>
+
+        <!-- Salads Section -->
+        <section id="salads" class="category">
+            <h2>🥗 السلطات</h2>
+            <div class="items-grid">
+                <div class="menu-item">
+                    <img src="images/salads/salad1.jpg" alt="سلطة عربية">
+                    <h3>سلطة عربية مشكلة</h3>
+                    <p>خليط من الخس والطماطم والخيار والبصل مع زيت الزيتون والليمون</p>
+                    <span class="price">18 $</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/salads/salad2.jpg" alt="تبولة">
+                    <h3>تبولة لبنانية</h3>
+                    <p>سلطة البقدونس التقليدية مع الطماطم والبرغل والنعناع والليمون</p>
+                    <span class="price">22 $</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/salads/Fattoush_Salad.jpg" alt="فتوش">
+                    <h3>فتوش شامي</h3>
+                    <p>سلطة الخضار المشكلة مع قطع الخبز المحمص والسماق ودبس الرمان</p>
+                    <span class="price">20 $</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/salads/Caesar_Salad.jpg" alt="سلطة يونانية">
+                    <h3>سلطة يونانية</h3>
+                    <p>خضار طازجة مع جبن الفيتا والزيتون الأسود وزيت الزيتون</p>
+                    <span class="price">25 $</span>
+                </div>
+            </div>
+        </section>
+
+    
+
+        <!-- Eastern Dishes Section -->
+        <section id="eastern" class="category">
+            <h2>🍛 الأطباق الشرقية الأصيلة</h2>
+            <div class="items-grid">
+                <div class="menu-item">
+                    <img src="images/eastern/Lamb_Mandi.png" alt="مندي لحم">
+                    <h3>مندي اللحم الأصيل</h3>
+                    <p>لحم ضأن طري مطبوخ على الطريقة اليمنية مع الأرز البسمتي والبهارات</p>
+                    <span class="price">14 $</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/eastern/Chicken_Kabsa.png" alt="كبسة دجاج">
+                    <h3>كبسة الدجاج الملكية</h3>
+                    <p>دجاج مشوي مع الأرز المبهر والخضار، على الطريقة السعودية الأصيلة</p>
+                    <span class="price">9 $</span>
+                </div>
+    
+                <div class="menu-item">
+                    <img src="images/eastern/Mansaf.png" alt="منسف">
+                    <h3>منسف أردني أصيل</h3>
+                    <p>لحم ضأن مطبوخ باللبن الجميد مع الأرز، يُقدم على الطريقة الأردنية</p>
+                    <span class="price">16 $</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/eastern/Chicken_Biryani.png" alt="برياني">
+                    <h3>برياني بالدجاج</h3>
+                    <p>  طازجة مع قطع الدجاج والأرز الأبيض</p>
+                    <span class="price">9.5 $</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/eastern/Stuffed_Chicken_with_Rice.jpg" alt="دجاج محشي  ">
+                    <h3>دجاج  محشي</h3>
+                    <p>قطع الخبز  مع  واللبن  والصنوبر</p>
+                    <span class="price">8 $</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Western Dishes Section -->
+        <section id="western" class="category">
+            <h2>🍝 الأطباق الغربية </h2>
+            <div class="items-grid">
+                <div class="menu-item">
+                    <img src="images/western/hot1.jpg" alt=" دجاج مقلي">
+                    <h3>دجاج مقلي سبايسي   </h3>
+                    <p>سبايسي   حسب الطلب مع البطاطس والخضار </p>
+                    <span class="price">7 $</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/western/Chicken_Burger.png" alt="برغر ">
+                    <h3>برجر دجاج   </h3>
+                    <p>برجر  طازج مع الجبن والخضار والبطاطس المقلية</p>
+                    <span class="price">8 $</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/western/Club_Sandwich.png" alt="سابا ">
+                    <h3>سابايا   </h3>
+                    <p>سابيا  طازج مع الجبن والخضار والبطاطس المقلية</p>
+                    <span class="price">4 $</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/western/Beef_Burger.jpg" alt="برغر ">
+                    <h3>برجر اللحم الفاخر</h3>
+                    <p>برجر  طازج مع الجبن والخضار والبطاطس المقلية</p>
+                    <span class="price">11 $</span>
+                </div>    <div class="menu-item">
+                    <img src="images/western/Double_Cheeseburger.png" alt="برغر ">
+                    <h3>برجر اللحم مع الجبن </h3>
+                    <p>برجر  طازج مع الجبن والخضار والبطاطس المقلية</p>
+                    <span class="price">12 $</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Grills Section -->
+        <section id="grills" class="category">
+            <h2>🔥 المشاوي</h2>
+            <div class="items-grid">
+                <div class="menu-item">
+                    <img src="images/meat/Mixed_Grill.jpg" alt=" مشاوي">
+                    <h3>مشكل المشاوي الفاخر</h3>
+                    <p>تشكيلة من الكباب والكفتة والشيش طاووق مع الأرز والسلطة</p>
+                    <span class="price">17 $</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/meat/grill2.jpg" alt=" مشاوي">
+                    <h3>كباب اللحم المتبل</h3>
+                    <p>أسياخ كباب لحم طرية متبلة بالبهارات الشرقية ومشوية على الفحم</p>
+                    <span class="price">14 $</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/meat/Shish_Tawook.png" alt=" مشاوي">
+                    <h3>شيش طاووق مشوي</h3>
+                    <p>قطع دجاج طرية متبلة بالثوم والليمون ومشوية على الفحم</p>
+                    <span class="price">11 $</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/meat/meat1.jpg" alt=" مشاوي">
+                    <h3>كفتة مشوية بالبقدونس</h3>
+                    <p>كفتة لحم طازجة مخلوطة بالبقدونس والبصل ومشوية على الفحم</p>
+                    <span class="price">18 $</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/meat/Lamb_Chops.png" alt=" مشاوي">
+                    <h3>ضلوع الغنم المشوية</h3>
+                    <p>ضلوع غنم طرية متبلة ومشوية ببطء على الفحم حتى النضج</p>
+                    <span class="price">16 $</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/meat/grill2.jpg" alt=" مشاوي">
+                    <h3>نصف دجاج مشوي</h3>
+                    <p>نصف دجاج طازج متبل ومشوي على الفحم مع الثوم والليمون</p>
+                    <span class="price">12 $</span>
+                </div>
+        
+            </div>
+        </section>
+
+        <!-- Seafood Section -->
+        <section id="seafood" class="category">
+            <h2>🐟 المأكولات البحرية</h2>
+            <div class="items-grid">
+                <div class="menu-item">
+                    <img src="images/seafood/Grilled_Salmon.png" alt="سمك مشوي">
+                    <h3>سمك هامور مشوي</h3>
+                    <p>سمك هامور طازج مشوي مع الخضار والأرز الأبيض وصوص الليمون</p>
+                    <span class="price">85 $</span>
+                </div>
+         
+                <div class="menu-item">
+                    <img src="images/seafood/Grilled_Fish.png" alt="سلمون مشوي">
+                    <h3>سلمون مشوي بالأعشاب</h3>
+                    <p>فيليه سلمون نرويجي مشوي مع الأعشاب الطازجة وصوص الكابر</p>
+                    <span class="price">95 $</span>
+                </div>
+         
+                <div class="menu-item">
+                    <img src="images/seafood/seafood1.jpg" alt="سمك فيليه">
+                    <h3>فيليه السمك المقلي</h3>
+                    <p>فيليه سمك طازج مقلي مع البقسماط والبطاطس المقلية</p>
+                    <span class="price">70 $</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/seafood/seafood2.jpg" alt="مأكولات بحرية">
+                    <h3>طبق المأكولات البحرية</h3>
+                    <p>تشكيلة من الجمبري والحبار والسمك مع الأرز والخضار</p>
+                    <span class="price">110 $</span>
+                </div>
+            </div>
+        </section>
+
+   
+
+        <!-- Sandwiches Section -->
+        <section id="sandwiches" class="category">
+            <h2>🥪 السندويتشات</h2>
+            <div class="items-grid">
+                <div class="menu-item">
+                    <img src="images/sandwiches/sandwich1.jpg" alt="شاورما لحم">
+                    <h3>شاورما اللحم</h3>
+                    <p>شاورما لحم طازجة مع الخضار والطحينة والثوم في خبز عربي</p>
+                    <span class="price">7 $</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/sandwiches/Chicken_Shawarma.png" alt="شاورما دجاج">
+                    <h3>شاورما الدجاج</h3>
+                    <p>شاورما دجاج مشوية مع الخضار والثوم والمايونيز في خبز طازج</p>
+                    <span class="price">5 $</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/sandwiches/Club_Sandwich.jpg" alt="تونة">
+                    <h3>سندويتش التونة</h3>
+                    <p>تونة طازجة مع الخضار والمايونيز في خبز التوست المحمص</p>
+                    <span class="price">20 $</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Crepes Section -->
+        <section id="crepes" class="category">
+            <h2>🥞 الحلويات</h2>
+            <div class="items-grid">
+                <div class="menu-item">
+                    <img src="images/cakes/crepe1.jpg" alt="كريب نوتيلا">
+                    <h3>كريب النوتيلا والفراولة</h3>
+                    <p>كريب رقيق محشو بالنوتيلا وقطع الفراولة الطازجة مع السكر البودرة</p>
+                    <span class="price">3 $</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/cakes/western3.jpg" alt="كريب موز">
+                    <h3>كريب الموز والعسل</h3>
+                    <p>كريب محشو بشرائح الموز الطازج والعسل الطبيعي</p>
+                    <span class="price">3.5 $</span>
+                </div>
+      
+                <div class="menu-item">
+                    <img src="images/cakes/Basbousa_with_Cream.jpg" alt="كريب شوكولاتة">
+                    <h3> الشوكولاتة البيضاء</h3>
+                    <p>كريب محشو بالشوكولاتة البيضاء والمكسرات المجروشة</p>
+                    <span class="price">3 $</span>
+                </div>
+          
+       
+                   <div class="menu-item">
+                    <img src="images/cakes/cake1.jpg" alt="كيك شوكولاتة">
+                    <h3>كيك الشوكولاتة الفاخر</h3>
+                    <p>قطعة كيك شوكولاتة غنية مع طبقات الكريمة والفواكه الطازجة</p>
+                    <span class="price">2 $</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/cakes/Cheesecake.png" alt="تشيز كيك">
+                    <h3>تشيز كيك بالفراولة</h3>
+                    <p>قطعة تشيز كيك كريمية مع صوص الفراولة الطازج</p>
+                    <span class="price">2 $</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/cakes/Basbousa.png" alt="نابلسيا">
+                    <h3>نابلسيا مع بزظا   </h3>
+                    <p>قطعة  فانيليا طرية مع كريمة الزبدة </p>
+                    <span class="price">3 $</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/cakes/Basbousa_with_Cream.jpg" alt="كيك جزر">
+                    <h3>كيك  بالمكسرات</h3>
+                    <p>قطعة كيك جزر صحية مع المكسرات وكريمة الجبن</p>
+                    <span class="price">3 $</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/cakes/arabic_sweets1.jpg" alt="حلويات  ">
+                    <h3>حلويات مشك   </h3>
+                    <p>قطعة كيك ليمون خفيفة مع كريمة الليمون الطازجة</p>
+                    <span class="price">19 $</span>
+                </div>
+              
+            </div>
+        </section>
+
+ 
+
+    
+        <!-- Fruit Salads Section -->
+        <section id="fruit-salads" class="category">
+            <h2>🍓 سلطات الفواكه</h2>
+            <div class="items-grid">
+                <div class="menu-item">
+                    <img src="images/fruit_salads/fruit1.jpg" alt="سلطة فواكه مشكلة">
+                    <h3>سلطة الفواكه المشكلة</h3>
+                    <p>خليط من الفواكه الطازجة الموسمية مع النعناع والعسل</p>
+                    <span class="price">3 $</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/fruit_salads/fruit1.jpg" alt="سلطة استوائية">
+                    <h3>سلطة الفواكه الاستوائية</h3>
+                    <p>مانجو وأناناس وكيوي مع جوز الهند المبشور</p>
+                    <span class="price">6 $</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/fruit_salads/Fruit_Cocktail.jpg" alt="سلطة توت">
+                    <h3>سلطة التوت المشكل</h3>
+                    <p>فراولة وتوت أزرق وتوت أحمر مع الكريمة المخفوقة</p>
+                    <span class="price">4 $</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pizza Section -->
+        <section id="pizza" class="category">
+            <h2>🍕 المعجنات و البيتزا </h2>
+            <div class="items-grid">
+                <div class="menu-item">
+                    <img src="images/pizza/margherita1.jpg" alt="بيتزا مارجريتا">
+                    <h3>بيتزا مارجريتا الكلاسيكية</h3>
+                    <p>بيتزا إيطالية أصيلة مع صوص الطماطم وجبن الموزاريلا الطازج وأوراق الريحان</p>
+                    <span class="price">6 $</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/pizza/pepperoni1.jpg" alt="بيتزا بيبروني">
+                    <h3>بيتزا البيبروني الحارة</h3>
+                    <p>بيتزا مع شرائح البيبروني الحار وجبن الموزاريلا على عجينة رقيقة مقرمشة</p>
+                    <span class="price">6 $</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/pizza/vegetarian1.jpg" alt="بيتزا نباتية">
+                    <h3>بيتزا الخضار الطازجة</h3>
+                    <p>بيتزا نباتية مع الفلفل الملون والطماطم والزيتون والفطر الطازج</p>
+                    <span class="price">7 $</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/pizza/Pizza_Margherita.png" alt="بيتزا أربعة أجبان">
+                    <h3>بيتزا الأجبان الأربعة</h3>
+                    <p>خليط من أربعة أنواع جبن: موزاريلا، بارميزان، جورجونزولا، وريكوتا</p>
+                    <span class="price">6.5 $</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/pizza/Cheese_Manakish.png" alt="زعتر  ">
+                    <h3>منقوشة زعتر   </h3>
+                    <p>عجينة عربية بزعتر الفاخر         </p>
+                    <span class="price">2 $</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/pizza/Garlic_Bread.png" alt="جبنة   ">
+                    <h3>منقوشة جبنة   </h3>
+                    <p>عجينة عربية بزعتر الفاخر         </p>
+                    <span class="price">2 $</span>
+                </div>    <div class="menu-item">
+                    <img src="images/pizza/Spinach_Fatayer.png" alt="جبنة   ">
+                    <h3> سمبوسك   </h3>
+                    <p>عجينة عربية  الفاخر         </p>
+                    <span class="price">4 $</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hot Drinks Section -->
+        <section id="hot-drinks" class="category">
+            <h2>☕ المشروبات </h2>
+            <div class="items-grid">
+                                <div class="menu-item">
+                    <img src="images/drinks/orange1.jpg" alt=" ">
+                    <h3>عصير البرتقال الطازج</h3>
+                    <p>عصير برتقال طبيعي 100% معصور طازجاً، غني بفيتامين سي</p>
+                    <span class="price">4 $</span>
+                </div>
+        
+                <div class="menu-item">
+                    <img src="images/drinks/Lemon_Mint_Juice.png" alt=" ">
+                    <h3>عصير ليمون بالنعناع</h3>
+                    <p>عصير ليمون طازج مع النعناع والثلج، مشروب منعش ومثالي للأجواء الحارة</p>
+                    <span class="price">15 $</span>
+                </div>
+
+                <div class="menu-item">
+                    <img src="images/drinks/drink1.jpg" alt=" ">
+                    <h3>سموثي الفواكه المشكلة</h3>
+                    <p>خليط منعش من المانجو والفراولة والموز مع الحليب وقطع الثلج</p>
+                    <span class="price">30 $</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/drinks/Arabic_Coffee.png" alt=" ">
+                    <h3>قهوة عربية أصيلة</h3>
+                    <p>قهوة عربية محمصة طازجة مع الهيل والزعفران، تُقدم مع التمر</p>
+                    <span class="price">15 $</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/drinks/Turkish_Tea.png" alt=" ">
+                    <h3>شاي أحمر بالنعناع</h3>
+                    <p>شاي أحمر قوي مع أوراق النعناع الطازج والسكر</p>
+                    <span class="price">10 $</span>
+                </div>
+                <div class="menu-item">
+                    <img src="images/drinks/Cappuccino.png" alt=" ">
+                    <h3>كابتشينو إيطالي</h3>
+                    <p>قهوة إسبريسو مع الحليب المبخر ورغوة الحليب الكريمية</p>
+                    <span class="price">18 $</span>
+                </div>
+            </div>
+        </section>
+
+      
+    </main>
+
+    <!-- Rating Modal -->
+    <div id="ratingModal" class="modal hidden">
+        <div class="modal-content">
+            <h3>تقييم الخدمة</h3>
+            <form id="ratingForm">
+                <input type="text" id="customerName" placeholder="اسمك" required>
+                <div class="stars">
+                    <span class="star" data-rating="1">⭐</span>
+                    <span class="star" data-rating="2">⭐</span>
+                    <span class="star" data-rating="3">⭐</span>
+                    <span class="star" data-rating="4">⭐</span>
+                    <span class="star" data-rating="5">⭐</span>
+                </div>
+                <textarea id="comment" placeholder="تعليقك (اختياري)"></textarea>
+                <button type="submit">إرسال التقييم</button>
+                <button type="button" onclick="closeModal()">إلغاء</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 قائمة طعام المطعم الفاخر. جميع الحقوق محفوظة. | تصميم حديث وأنيق لتجربة طعام لا تُنسى</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Register Service Worker for caching and offline functionality
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(function(registration) {
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    }, function(err) {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+            });
+        }
+
+        // Preload critical images
+        function preloadImages() {
+            const criticalImages = [
+                'images/breakfast/breakfast1.jpg',
+                'images/hot_appetizers/hot1.jpg',
+                'images/cold_appetizers/cold1.jpg',
+                'images/salads/salad1.jpg',
+                'images/eastern/eastern1.jpg',
+                'images/western/western1.jpg'
+            ];
+
+            criticalImages.forEach(src => {
+                const img = new Image();
+                img.src = src;
+            });
+        }
+
+        // Call preload function after page load
+        window.addEventListener('load', preloadImages);
+
+        // Optimize image loading with intersection observer
+        document.addEventListener('DOMContentLoaded', function() {
+            if ('IntersectionObserver' in window) {
+                const imageObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const img = entry.target;
+                            img.src = img.dataset.src || img.src;
+                            img.classList.remove('lazy');
+                            observer.unobserve(img);
+                        }
+                    });
+                });
+
+                document.querySelectorAll('img[data-src]').forEach(img => {
+                    imageObserver.observe(img);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+
